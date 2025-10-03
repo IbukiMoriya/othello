@@ -35,6 +35,11 @@ function initBoard() {
 
 function render() {
   boardEl.innerHTML = '';
+  // プレイヤーのターンかどうかを判定
+  const humanIsBlack = (firstSelect.value === 'human');
+  const isHumanTurn = (humanIsBlack && turn===1) || (!humanIsBlack && turn===2);
+  const validMoves = isHumanTurn && !cpuThinking && !awaitingCpuFirst ? validMovesFor(turn) : [];
+  
   for (let r=0;r<SIZE;r++){
     for (let c=0;c<SIZE;c++){
       const cell = document.createElement('div');
@@ -48,6 +53,11 @@ function render() {
         const d = document.createElement('div');
         d.className='disk ' + (board[r][c]===1? 'black':'white');
         cell.appendChild(d);
+      } else if (validMoves.some(m => m[0]===r && m[1]===c)) {
+        // 合法手の位置にヒントを表示
+        const hint = document.createElement('div');
+        hint.className='hint';
+        cell.appendChild(hint);
       }
       cell.addEventListener('click', onCellClick);
       boardEl.appendChild(cell);

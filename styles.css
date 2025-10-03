@@ -8,8 +8,9 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neu
 .disk { width: 80%; height: 80%; border-radius:50%; position:absolute; left:10%; top:10%; box-shadow: 0 2px 3px rgba(0,0,0,0.3) }
 .disk.black { background: #000 }
 .disk.white { background: #fff; border: 1px solid #ccc }
-.disk.hint { outline: 3px dashed rgba(255,255,0,0.6); }
 .disk.cpu-last-move { box-shadow: 0 0 0 3px rgba(255, 50, 50, 0.8), 0 2px 3px rgba(0,0,0,0.3); }
+.hint { width: 30%; height: 30%; border-radius:50%; position:absolute; left:35%; top:35%; background: rgba(255,255,100,0.5); border: 2px solid rgba(255,255,0,0.8); cursor: pointer; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.2); opacity: 1; } }
 .info { min-width:220px }
 .controls { display:flex; gap:8px; align-items:center; margin-bottom:12px }
 button { padding:6px 10px }
