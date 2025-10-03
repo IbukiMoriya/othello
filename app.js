@@ -23,6 +23,7 @@ let kifu = [];
 let cpuTimer = 5; // seconds per move
 let cpuThinking = false;
 let cpuInterval = null;
+let lastCpuMove = null; // CPUの最後の手 [r, c]
 
 // ===== 定石データベース =====
 // 主要な定石のパターン（座標は0-based）
@@ -101,6 +102,10 @@ function render() {
       if (board[r][c]!==0){
         const d = document.createElement('div');
         d.className='disk ' + (board[r][c]===1? 'black':'white');
+        // CPUの最後の手にハイライトを追加
+        if (lastCpuMove && lastCpuMove[0]===r && lastCpuMove[1]===c) {
+          d.classList.add('cpu-last-move');
+        }
         cell.appendChild(d);
       } else if (validMoves.some(m => m[0]===r && m[1]===c)) {
         // 合法手の位置にヒントを表示
@@ -277,6 +282,7 @@ function doCpuMove(){
   saveHistory();
   applyMove(turn, choice[0], choice[1]);
   kifu.push(`${posToCoord(choice[0],choice[1])} (${turn===1?'B':'W'})`);
+  lastCpuMove = choice; // CPUの最後の手を記録
   cpuThinking = false;
 
   // 500ms後にcpuTimeElをクリア
@@ -481,7 +487,7 @@ undoBtn.addEventListener('click', ()=>{
 
 startBtn.addEventListener('click', ()=>{
   initBoard();
-  history=[]; kifu=[]; cpuThinking=false;
+  history=[]; kifu=[]; cpuThinking=false; lastCpuMove=null; lastCpuMove=null;
   const first = firstSelect.value;
   // if CPU first, CPU is black
   // no special handling here - gameplay logic uses turn and first select
@@ -513,6 +519,7 @@ function onCellClick(e){
     saveHistory();
     applyMove(turn,r,c);
     kifu.push(`${posToCoord(r,c)} (CPU)`);
+    lastCpuMove = [r, c]; // CPU初手を記録
     awaitingCpuFirst=false;
     nextTurn();
     return;
@@ -525,6 +532,7 @@ function onCellClick(e){
   const humanPlays = (humanIsBlack && turn===1) || (!humanIsBlack && turn===2);
   if (!humanPlays) return; // ignore clicks when not human's turn
 
+  lastCpuMove = null; // プレイヤーが手を打つ際、CPUの最後の手のハイライトをクリア
   saveHistory();
   applyMove(turn,r,c);
   kifu.push(`${posToCoord(r,c)} (${turn===1?'B':'W'})`);
