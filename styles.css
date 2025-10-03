@@ -1,0 +1,15 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; padding: 16px; background:#f4f4f4 }
+.container { max-width: 900px; margin: 0 auto; }
+.board-wrap { display:flex; gap:16px }
+#board { width: 512px; height:512px; background: #086b3b; display:grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr); border: 4px solid #333 }
+.cell { border: 1px solid rgba(0,0,0,0.2); position:relative; }
+.coord { position:absolute; font-size:10px; color:rgba(255,255,255,0.6); top:2px; left:2px }
+.disk { width: 80%; height: 80%; border-radius:50%; position:absolute; left:10%; top:10%; box-shadow: 0 2px 3px rgba(0,0,0,0.3) }
+.disk.black { background: #000 }
+.disk.white { background: #fff; border: 1px solid #ccc }
+.disk.hint { outline: 3px dashed rgba(255,255,0,0.6); }
+.info { min-width:220px }
+.controls { display:flex; gap:8px; align-items:center; margin-bottom:12px }
+button { padding:6px 10px }
+#kifu { max-height: 360px; overflow:auto; padding-left: 18px }

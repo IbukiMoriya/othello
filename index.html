@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>オセロ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>オセロ</h1>
+
+    <div class="controls">
+      <label>先手:
+        <select id="first-player">
+          <option value="human">プレイヤー</option>
+          <option value="cpu">CPU</option>
+        </select>
+      </label>
+      <button id="start">開始</button>
+      <button id="undo">打ち直し</button>
+    </div>
+
+    <div class="board-wrap">
+      <div id="board"></div>
+      <div class="info">
+        <div>現在: <span id="turn">-</span></div>
+        <div>黒: <span id="black-count">2</span> 白: <span id="white-count">2</span></div>
+        <div>CPU 残り時間: <span id="cpu-time">5</span>s</div>
+        <div>棋譜:</div>
+        <ol id="kifu"></ol>
+      </div>
+    </div>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
