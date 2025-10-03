@@ -123,6 +123,12 @@ function nextTurn(){
       alert((turn===1?'黒':'白') + 'は合法手がありません。ターンをスキップします');
       turn = turn===1?2:1;
       render();
+      // CPUのターンかどうか再確認
+      const playerIsHumanFirst = firstSelect.value === 'human';
+      const cpuPlays = playerIsHumanFirst? (turn===2) : (turn===1);
+      if (cpuPlays && !awaitingCpuFirst){
+        startCpuMove();
+      }
       return;
     }
   }
@@ -136,7 +142,7 @@ function nextTurn(){
   // adjust: CPU always plays opposite of player.
   const playerIsHumanFirst = firstSelect.value === 'human';
   const cpuPlays = playerIsHumanFirst? (turn===2) : (turn===1);
-  if (cpuPlays){
+  if (cpuPlays && !awaitingCpuFirst){
     startCpuMove();
   }
 }
@@ -157,7 +163,9 @@ function startCpuMove(){
 
 function doCpuMove(){
   // Simple CPU: pick the move that flips the most stones. If tie, random among best.
-  clearInterval(cpuInterval);
+  if (cpuInterval) {
+    clearInterval(cpuInterval);
+  }
   const moves = validMovesFor(turn);
   if (moves.length===0){ cpuThinking=false; nextTurn(); return }
   let best = [];
@@ -174,6 +182,7 @@ function doCpuMove(){
   applyMove(turn, choice[0], choice[1]);
   kifu.push(`${posToCoord(choice[0],choice[1])} (${turn===1?'B':'W'})`);
   cpuThinking = false;
+  cpuTimeEl.textContent = '-';
   nextTurn();
 }
 
