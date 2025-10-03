@@ -149,16 +149,11 @@ function nextTurn(){
 
 function startCpuMove(){
   cpuThinking = true;
-  cpuTimer = 5;
-  cpuTimeEl.textContent = cpuTimer;
-  cpuInterval = setInterval(()=>{
-    cpuTimer--;
-    cpuTimeEl.textContent = cpuTimer;
-    if (cpuTimer<=0){
-      clearInterval(cpuInterval);
-      doCpuMove();
-    }
-  },1000);
+  cpuTimeEl.textContent = '思考中...';
+  // 探索は即座に完了するので、少し遅延を入れてから実行
+  setTimeout(() => {
+    doCpuMove();
+  }, 500); // 0.5秒の遅延で自然な動きに
 }
 
 function doCpuMove(){
